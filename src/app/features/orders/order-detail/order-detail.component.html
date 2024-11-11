@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Order Details #{{data.order.id}}</h2>
+<mat-dialog-content>
+  <div class="order-info">
+    <div class="info-section">
+      <h3>Customer Information</h3>
+      <p><strong>Name:</strong> {{data.order.customerName}}</p>
+      <p><strong>Address:</strong> {{data.order.addressDetail}}</p>
+    </div>
+
+    <div class="info-section">
+      <h3>Order Information</h3>
+      <p><strong>Date:</strong> {{data.order.orderDate | date:'medium'}}</p>
+      <p><strong>Status:</strong>
+        <span [class]="'status-badge status-' + data.order.orderStatus.toLowerCase()">
+              {{data.order.orderStatus}}
+            </span>
+      </p>
+      <p><strong>Payment Method:</strong> {{data.order.paymentMethod}}</p>
+      @if (data.order.notes) {
+        <p><strong>Notes:</strong> {{data.order.notes}}</p>
+      }
+    </div>
+
+    <div class="info-section">
+      <h3>Order Items</h3>
+      <table class="items-table">
+        <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+        </tr>
+        </thead>
+        <tbody>
+          @for (item of data.order.details; track item.id) {
+            <tr>
+              <td>{{item.productName}}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.unitPrice | currency}}</td>
+              <td>{{item.subtotal | currency}}</td>
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+        <tr>
+          <td colspan="3" class="total-label">Total:</td>
+          <td class="total-amount">{{data.order.totalAmount | currency}}</td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

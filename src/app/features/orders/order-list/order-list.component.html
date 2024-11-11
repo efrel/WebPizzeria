@@ -1,0 +1,69 @@
+<div class="container">
+  <div class="header">
+    <h2>Orders</h2>
+    <button mat-raised-button color="primary" (click)="openCreateDialog()">
+      <mat-icon>add</mat-icon>
+      New Order
+    </button>
+  </div>
+
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="customerName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Customer </mat-header-cell>
+      <mat-cell *matCellDef="let order"> {{order.customerName}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="orderDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        {{order.orderDate | date:'short'}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="orderStatus">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+            <span [class]="'status-badge status-' + order.orderStatus.toLowerCase()">
+              {{order.orderStatus}}
+            </span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="totalAmount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        {{order.totalAmount | currency}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+      <mat-cell *matCellDef="let order">
+        <button mat-icon-button color="primary" (click)="viewDetails(order)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+<!--        @if (order.orderStatus === 'Pending') {-->
+<!--          <button mat-icon-button color="accent" (click)="updateStatus(order)">-->
+<!--            <mat-icon>edit</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-icon-button color="warn" (click)="deleteOrder(order)">-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--          </button>-->
+<!--        }-->
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25]"
+                 showFirstLastButtons
+                 [pageSize]="10">
+  </mat-paginator>
+</div>

@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+
+// Tema claro
+$tema-claro: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$green-palette,
+  ),
+));
+
+// Tema oscuro
+$tema-oscuro: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$green-palette,
+  ),
+));
+
+html{
+  @include mat.all-component-themes($tema-claro);
+}
+
+.tema-oscuro {
+  @include mat.all-component-themes($tema-oscuro);
+}
+
